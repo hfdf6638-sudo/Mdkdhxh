@@ -52,30 +52,15 @@ infiniteJumpBtn.MouseButton1Click:Connect(function()
     jumpEnabled = not jumpEnabled
     infiniteJumpBtn.Text = jumpEnabled and "القفز اللانهائي: مفعل" or "القفز اللانهائي: معطل"
 end)
+-- تعريف المتغير
+local infjump = false
 
--- زر منع الموت
-local antiDeathBtn = Instance.new("TextButton")
-antiDeathBtn.Size = UDim2.new(0.8, 0, 0, 50)
-antiDeathBtn.Position = UDim2.new(0.1, 0, 0.4, 0)
-antiDeathBtn.BackgroundColor3 = Color3.fromRGB(0, 80, 200)
-antiDeathBtn.Text = "تمكين منع الموت"
-antiDeathBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-antiDeathBtn.Parent = mainFrame
-
-local antiDeathEnabled = false
-antiDeathBtn.MouseButton1Click:Connect(function()
-    antiDeathEnabled = not antiDeathEnabled
-    antiDeathBtn.Text = antiDeathEnabled and "منع الموت: مفعل" or "منع الموت: معطل"
-end)
-
--- القفز اللانهائي
-local UserInputService = game:GetService("UserInputService")
-UserInputService.JumpRequest:Connect(function()
-    if jumpEnabled and humanoid and humanoid.FloorMaterial ~= Enum.Material.Air then
-        humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+-- الكود الخاص بالقفز اللانهائي
+uis.JumpRequest:Connect(function()
+    if infjump and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
+        plr.Character.HumanoidRootPart.AssemblyLinearVelocity = Vector3.new(plr.Character.HumanoidRootPart.AssemblyLinearVelocity.X, 52, plr.Character.HumanoidRootPart.AssemblyLinearVelocity.Z)
     end
 end)
-
 -- منع الموت
 player.CharacterAdded:Connect(function(newChar)
     char = newChar
